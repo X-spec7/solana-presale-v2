@@ -7,7 +7,7 @@ pub mod state;
 
 use instructions::*;
 
-declare_id!("HYp1PfQuDH8N24J5pe2TjekahawdwFzM5F2GUyqhZQhY");
+declare_id!("Be9UBkYH5QCfq91LoZMuGBigFGTYvERbXRDvJfB5trgc");
 
 #[program]
 pub mod presale {

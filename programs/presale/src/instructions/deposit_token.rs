@@ -89,7 +89,6 @@ pub struct DepositToken<'info> {
     )]
     pub to_associated_token_account: Account<'info, token::TokenAccount>,
 
-    /// CHECK: This is not dangerous
     #[account(
         mut,
         // init,
@@ -110,7 +109,6 @@ pub struct DepositToken<'info> {
     // #[account(mut)]
     // pub payer: AccountInfo<'info>,
 
-    /// CHECK:
     #[account(mut)]
     pub admin: AccountInfo<'info>,
 

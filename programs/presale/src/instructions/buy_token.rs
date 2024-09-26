@@ -39,6 +39,11 @@ pub fn buy_token(
         return Err(PresaleError::PresaleEnded.into());
     }
 
+    // limit the presale to hardcap
+    if presale_info.is_hard_capped == true {
+        return Err(PresaleError::HardCapped.into())
+    }
+
     // compare the rest with the token_amount
     if token_amount > presale_info.deposit_token_amount - presale_info.sold_token_amount {
         msg!("token amount: {}", token_amount);
@@ -53,11 +58,6 @@ pub fn buy_token(
         return Err(PresaleError::InsufficientFund.into())
     }
 
-    // limit the presale to hardcap
-    if presale_info.is_hard_capped == true {
-        return Err(PresaleError::HardCapped.into())
-    }
-    
     // send SOL to contract and update the user info
     user_info.buy_time = cur_timestamp;
     user_info.buy_quote_amount = user_info.buy_quote_amount + quote_amount;
@@ -78,13 +78,11 @@ pub fn buy_token(
     
     msg!("Presale tokens transferred successfully.");
 
-    // show softcap status
     if presale_vault.get_lamports() > presale_info.softcap_amount {
         presale_info.is_soft_capped = true;
         msg!("Presale is softcapped");
     }
     
-    // show hardcap status
     if presale_vault.get_lamports() > presale_info.hardcap_amount {
         presale_info.is_hard_capped = true;
         msg!("Presale is hardcapped");
@@ -102,7 +100,6 @@ pub struct BuyToken<'info> {
     )]
     pub presale_info: Box<Account<'info, PresaleInfo>>,
 
-    /// CHECK: This is not dangerous
     pub presale_authority: AccountInfo<'info>,
 
     #[account(
@@ -114,7 +111,6 @@ pub struct BuyToken<'info> {
     )]
     pub user_info: Box<Account<'info, UserInfo>>,
 
-    /// CHECK: This is not dangerous
     #[account(
         mut,
         seeds = [PRESALE_VAULT],

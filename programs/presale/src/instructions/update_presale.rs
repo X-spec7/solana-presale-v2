@@ -3,7 +3,6 @@ use anchor_lang::prelude::*;
 use crate::state::PresaleInfo;
 use crate::constants::PRESALE_SEED;
 
-// Edit the details for a presale
 pub fn update_presale(
     ctx: Context<UpdatePresale>,
     max_token_amount_per_address: u64,
@@ -27,7 +26,6 @@ pub fn update_presale(
 
 #[derive(Accounts)]
 pub struct UpdatePresale<'info> {
-    // presale_detils account
     #[account(
         mut,
         seeds = [PRESALE_SEED],
@@ -35,13 +33,11 @@ pub struct UpdatePresale<'info> {
     )]
     pub presale_info: Box<Account<'info, PresaleInfo>>,
     
-    // Set the authority to the transaction signer
     #[account(
         mut,
         constraint = authority.key() == presale_info.authority
     )]
     pub authority: Signer<'info>,
     
-    // Must be included when initializing an account
     pub system_program: Program<'info, System>,
 }
