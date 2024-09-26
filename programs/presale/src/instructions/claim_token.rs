@@ -30,6 +30,16 @@ pub fn claim_token(
     let user_info = &mut ctx.accounts.user_info;
     let claim_amount = user_info.buy_token_amount;
 
+    // Check if user has any tokens to claim
+    if claim_amount == 0 {
+        return Err(PresaleError::NoTokensToClaim.into());
+    }
+
+    // Check if presale has enough tokens to transfer
+    if presale_info.deposit_token_amount - presale_info.sold_token_amount < claim_amount {
+        return Err(PresaleError::InsufficientPresaleTokens.into());
+    }
+
     msg!("Transferring presale tokens to buyer {}...", &ctx.accounts.buyer.key());
     msg!("Mint: {}", &ctx.accounts.presale_token_mint_account.to_account_info().key());   
     msg!("From Token Address: {}", &ctx.accounts.presale_presale_token_associated_token_account.key());     
@@ -77,7 +87,7 @@ pub struct ClaimToken<'info> {
 
     #[account(
         mut,
-        seeds = [USER_SEED],
+        seeds = [USER_SEED, buyer.key().as_ref()],
         bump
     )]
     pub user_info: Box<Account<'info, UserInfo>>,

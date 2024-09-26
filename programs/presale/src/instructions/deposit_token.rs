@@ -33,7 +33,7 @@ pub fn deposit_token(ctx: Context<DepositToken>, amount: u64) -> Result<()> {
             token::Transfer {
                 from: ctx.accounts.from_associated_token_account.to_account_info(),
                 to: ctx.accounts.to_associated_token_account.to_account_info(),
-                authority: ctx.accounts.from_authority.to_account_info(),
+                authority: ctx.accounts.admin.to_account_info(),
             },
         ),
         amount,
@@ -74,7 +74,7 @@ pub struct DepositToken<'info> {
     #[account(
         mut,
         associated_token::mint = mint_account,
-        associated_token::authority = from_authority,
+        associated_token::authority = admin,
     )]
     pub from_associated_token_account: Account<'info, token::TokenAccount>,
 
@@ -91,8 +91,8 @@ pub struct DepositToken<'info> {
 
     #[account(
         mut,
-        // init,
-        // payer = payer,
+        init_if_needed,
+        payer = payer,
         seeds = [PRESALE_VAULT],
         bump,
         // space = 0
@@ -106,11 +106,11 @@ pub struct DepositToken<'info> {
     )]
     pub presale_info: Box<Account<'info, PresaleInfo>>,
 
-    // #[account(mut)]
-    // pub payer: AccountInfo<'info>,
+    #[account(mut)]
+    pub payer: AccountInfo<'info>,
 
     #[account(mut)]
-    pub admin: AccountInfo<'info>,
+    pub admin: Signer<'info>,
 
     pub rent: Sysvar<'info, Rent>,
     pub system_program: Program<'info, System>,

@@ -22,4 +22,18 @@ pub enum PresaleError {
     PresaleNotEnded,
     #[msg("Presale already ended")]
     HardCapped
+    #[msg("No funds to refund")]
+    NoFundsToRefund,
+    #[msg("Presale is still ongoing")]
+    PresaleStillOngoing,
+    #[msg("Softcap has been reached, refunds are not possible")]
+    SoftcapReached,
+    #[msg("Error in token amount calculation")]
+    CalculationError,
+    #[msg("Purchase would exceed maximum tokens per address")]
+    ExceedsMaxTokenPerAddress,
+    #[msg("No tokens to claim")]
+    NoTokensToClaim,
+    #[msg("Insufficient presale tokens")]
+    InsufficientPresaleTokens,
 }
