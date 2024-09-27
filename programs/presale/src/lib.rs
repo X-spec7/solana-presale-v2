@@ -21,8 +21,6 @@ pub mod presale {
         hardcap_amount: u64,
         max_token_amount_per_address: u64,
         price_per_token: u64,
-        start_time: u64,
-        end_time: u64,
         // identifier: u8
     ) -> Result<()> {
         return create_presale::create_presale(
@@ -33,8 +31,6 @@ pub mod presale {
             hardcap_amount,
             max_token_amount_per_address,
             price_per_token,
-            start_time,
-            end_time,
             // identifier,
         );
     }
@@ -85,12 +81,10 @@ pub mod presale {
     
     pub fn buy_token(
         ctx: Context<BuyToken>,
-        token_amount: u64,
         quote_amount_in_lamports: u64,
     ) -> Result<()> {
         return buy_token::buy_token (
             ctx,
-            token_amount,
             quote_amount_in_lamports,
         );
     }
