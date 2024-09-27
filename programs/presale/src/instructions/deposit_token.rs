@@ -78,9 +78,6 @@ pub struct DepositToken<'info> {
     )]
     pub from_associated_token_account: Account<'info, token::TokenAccount>,
 
-    #[account(constraint = admin.key() == from_authority.key())]
-    pub from_authority: Signer<'info>,
-
     #[account(
         init,
         payer = admin,
