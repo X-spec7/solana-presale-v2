@@ -97,6 +97,8 @@ pub fn buy_token(
         msg!("Presale is hardcapped");
     }
 
+    if presale_info.sold_token_amount
+
     Ok(())
 }
 

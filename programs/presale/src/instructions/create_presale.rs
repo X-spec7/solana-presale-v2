@@ -27,6 +27,7 @@ pub fn create_presale(
     presale_info.authority = authority.key();
     presale_info.is_soft_capped = false;
     presale_info.is_hard_capped = false;
+    presale_info.current_presale_step = 1;
 
     msg!(
         "Presale has created for token: {}",

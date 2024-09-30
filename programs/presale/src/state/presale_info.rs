@@ -29,4 +29,6 @@ pub struct PresaleInfo {
     pub is_soft_capped: bool,
     // Status of hardcapped
     pub is_hard_capped: bool,
+
+    pub current_presale_step: u64,
 }
