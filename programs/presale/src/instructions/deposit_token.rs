@@ -86,13 +86,13 @@ pub struct DepositToken<'info> {
     )]
     pub to_associated_token_account: Account<'info, token::TokenAccount>,
 
+    /// CHECK
     #[account(
-        mut,
         init_if_needed,
         payer = payer,
         seeds = [PRESALE_VAULT],
         bump,
-        // space = 0
+        space = 0
     )]
     pub presale_vault: AccountInfo<'info>,
 
@@ -103,6 +103,7 @@ pub struct DepositToken<'info> {
     )]
     pub presale_info: Box<Account<'info, PresaleInfo>>,
 
+    /// CHECK
     #[account(mut)]
     pub payer: AccountInfo<'info>,
 

@@ -7,7 +7,7 @@ use crate::errors::PresaleError;
 pub fn require_refund(ctx: Context<Refund>) -> Result<()> {
     let user_info = &mut ctx.accounts.user_info;
     let presale_info = &mut ctx.accounts.presale_info;
-    let presale_vault = &ctx.accounts.presale_vault;
+    // let presale_vault = &ctx.accounts.presale_vault;
 
     // Check if the user has any funds to refund
     if user_info.buy_quote_amount_in_lamports == 0 {
@@ -15,8 +15,8 @@ pub fn require_refund(ctx: Context<Refund>) -> Result<()> {
     }
 
     // Check if the presale is still ongoing
-    let clock = Clock::get()?;
-    if clock.unix_timestamp * 1000 < presale_info.end_time {
+    let cur_timestamp = u64::try_from(Clock::get()?.unix_timestamp).unwrap();
+    if cur_timestamp * 1000 < presale_info.end_time {
         return Err(PresaleError::PresaleStillOngoing.into());
     }
 
@@ -66,6 +66,7 @@ pub struct Refund<'info> {
     )]
     pub user_info: Account<'info, UserInfo>,
 
+    ///CHECK
     #[account(
         mut,
         seeds = [PRESALE_VAULT],

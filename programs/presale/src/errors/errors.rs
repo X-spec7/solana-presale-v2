@@ -21,7 +21,7 @@ pub enum PresaleError {
     #[msg("Presale not ended yet")]
     PresaleNotEnded,
     #[msg("Presale already ended")]
-    HardCapped
+    HardCapped,
     #[msg("No funds to refund")]
     NoFundsToRefund,
     #[msg("Presale is still ongoing")]

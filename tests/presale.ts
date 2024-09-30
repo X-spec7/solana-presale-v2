@@ -176,11 +176,16 @@ describe("presale", () => {
       console.log("presale pda", presaleInfoPDA.toBase58());
       const tx = await program.methods
         .createPresale(
-          mint,
-          softCapAmount,
-          hardCapAmount,
-          maxTokenAmountPerAddress,
-          pricePerToken,
+          [
+            {
+              name: "tokenMintAddress"
+            }
+          ]
+          // mint,
+          // BigInt(softCapAmount.toString()),
+          // BigInt(hardCapAmount.toString()),
+          // BigInt(maxTokenAmountPerAddress.toString()),
+          // BigInt(pricePerToken.toString()),
         )
         .accounts({
           presaleInfo: presaleInfoPDA,

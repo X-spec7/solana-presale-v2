@@ -7,7 +7,6 @@ use {
 };
 
 use solana_program::clock::Clock;
-use solana_program::native_token::LAMPORTS_PER_SOL;
 
 use crate::constants::PRESALE_VAULT;
 use crate::state::PresaleInfo;
@@ -111,6 +110,7 @@ pub struct BuyToken<'info> {
     )]
     pub presale_info: Box<Account<'info, PresaleInfo>>,
 
+    /// CHECK: This is safe because we trust the authority to sign the transaction
     pub presale_authority: AccountInfo<'info>,
 
     #[account(
@@ -122,6 +122,7 @@ pub struct BuyToken<'info> {
     )]
     pub user_info: Box<Account<'info, UserInfo>>,
 
+    /// CHECK: This is safe because we trust the authority to sign the transaction
     #[account(
         mut,
         seeds = [PRESALE_VAULT],
